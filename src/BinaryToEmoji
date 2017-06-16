@@ -1,0 +1,39 @@
+import argparse
+
+hex_to_emoji = {
+	'0' : '0️⃣',
+	'1' : '1️⃣',
+	'2' : '2️⃣',
+	'3' : '3️⃣',
+	'4' : '4️⃣',
+	'5' : '5️⃣',
+	'6' : '6️⃣',
+	'7' : '7️⃣',
+	'8' : '8️⃣',
+	'9' : '9️⃣',
+	'a' : '🅰️',
+	'b' : '🅱️',
+	'c' : '©',
+	'd' : '↩️',
+	'e' : '📧',
+	'f' : '🎏',
+	'x' : '❌',
+}
+
+# Parse the args
+parser = argparse.ArgumentParser(description='Convert your boring 😴 binaries 1️⃣ 0️⃣  to lit 🔥   emoji hex 0️⃣ ❌ 🅰️ 🅱️')
+parser.add_argument('file_name', help='The name of the binary file you wish to process')
+parser.add_argument("-b", "--bytes_per_line", help="The number of bytes to print per line (default is 8)", type=int)
+args = parser.parse_args()
+bytes_per_line = args.bytes_per_line if args.bytes_per_line else 8
+
+# Get file data
+with open(args.file_name, 'rb') as f:
+	hex_data = bytes.hex(f.read())
+
+# Output the formatted data
+for i in range(len(hex_data)):
+	if not i%bytes_per_line:
+		print('\n' + hex_to_emoji['0'] + ' ' + hex_to_emoji['x'], end='')
+	print(' ' + hex_to_emoji[hex_data[i]], end='')
+print('\n', end='')
